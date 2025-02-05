@@ -5,59 +5,95 @@ commands = ["KEYS", "MEMBERS", "ADD", "REMOVE", "REMOVEALL", "CLEAR", "KEYEXISTS
 # Returns all the keys in the dictionary.
 # Order is not guaranteed.
 def keys():
-    return
+    keys = dictionary.keys()
+    print(keys)
+    for index, key in enumerate(keys):
+        print(f"{index + 1}) {key}")
+    return keys
 
 ### MEMBERS
 # Returns the collection of strings for the given key. 
 # Return order is not guaranteed.
 # Returns an error if the key does not exists.
 def members(key):
-    if False:
-        return "ERROR, key does not exist."
-    return
+    if key_exists(key):
+        members = dictionary[key]
+        for index, member in enumerate(members):
+            print(f"{index + 1}) {member}")
+        return members
+    else:
+        print("ERROR, key does not exist.")
 
 ### ADD
 # Adds a member to a collection for a given key.
 # Displays an error if the member already exists for the key.
-def add(key, value):
-    if key_exists():
-        return
-    return
+def add(key, member):
+    if member_exists(key, member):
+        print(") ERROR, member already exists for key")
+    else:
+        if key_exists(key):
+            dictionary[key].append(member)
+        else:
+            dictionary[key] = [member]
+        print(") Added")
 
 ### REMOVE
 # Removes a member from a key.
 # If the last member is removed from the key, the key is removed from the dictionary.
 # If the key or member does not exist, displays an error.
-def remove():
-    return
+def remove(key, member):
+    if key_exists:
+        if member_exists(key, member):
+            if len(dictionary[key]) == 1:
+                dictionary.pop(key)
+            else:
+                dictionary[key].remove(member)
+            print(") Removed")
+        else:
+            print(") ERROR, member does not exist")
+    else:
+        print(") ERROR, key does not exist ")
 
 ### REMOVEALL
 # Removes all members for a key and removes the key from the dictionary.
 # Returns an error if the key does not exist.
-def remove_all():
-    return
+def remove_all(key):
+    if key_exists(key):
+        dictionary.pop(key)
+        print(") Removed")
+    else:
+        print("ERROR, key does not exist.")
 
 ### CLEAR
 # Removes all keys and all members from the dictionary.
 def clear():
-    return
+    dictionary.clear()
+    print(") Cleared")
 
 ### KEYEXISTS
 # Returns whether a key exists or not.
-def key_exists():
-    return True
+def key_exists(key):
+    return key in dictionary
 
 ### MEMBEREXISTS
 # Returns whether a member exists within a key.
 # Returns false if the key does not exist.
-def member_exists():
-    return
+def member_exists(key, value):
+    if key_exists(key):
+        return value in dictionary[key]
+    else:
+        return False
 
 ### ALLMEMBERS
 # Returns all the members in the dictionary.
 # Returns nothing if there are none. Order is not guaranteed.
-def all_members();
-    return
+def all_members():
+    index = 1
+    all_keys = dictionary.keys()
+    for key in all_keys:
+        for member in dictionary[key]:
+            print(f"{index}) {member}")
+            index = index + 1
 
 ### ITEMS
 # Returns all keys in the dictionary and all of their members.
@@ -65,9 +101,9 @@ def all_members();
 # Order is not guaranteed.
 def items():
     index = 1
-    keys = keys()
-    for key in keys:
-        for member in members(key):
+    all_keys = dictionary.keys()
+    for key in all_keys:
+        for member in dictionary[key]:
             print(f"{index}) {key}: {member}")
             index = index + 1
 
@@ -99,6 +135,8 @@ def verify_command(command, arg_count):
             else:
                 invalid_arguments(command)
                 return False
+        else:
+            return True
 
 def process_command(command, args):
     if command == "KEYS":

@@ -64,23 +64,73 @@ def all_members();
 # Returns nothing if there are none.
 # Order is not guaranteed.
 def items():
-    return
+    index = 1
+    keys = keys()
+    for key in keys:
+        for member in members(key):
+            print(f"{index}) {key}: {member}")
+            index = index + 1
 
 ### HELP
-# Give all commands and format, short description
+# Give all commands
 def help():
-    print(commands)
+    print("Commands available: {commands}")
+
+def invalid_arguments(command):
+    print(f"Not valid # of arguments for {command}")
+
+def verify_command(command, arg_count):
+    if arg_count > 3:
+        print("Too many arguments. Please use the right number of arguments")
+        return False
+    if command not in commands:
+        print("Invalid command. Please enter a valid command")
+        return False
+    else:
+        if command in ["MEMBERS","KEYEXISTS", "REMOVEALL"]:
+            if arg_count == 2:
+                return True
+            else:
+                invalid_arguments(command)
+                return False
+        elif command in ["ADD", "REMOVE", "MEMBEREXISTS"]:
+            if arg_count == 3:
+                return True
+            else:
+                invalid_arguments(command)
+                return False
 
 def process_command(command, args):
-    return
+    if command == "KEYS":
+        keys()
+    elif command == "CLEAR":
+        clear()
+    elif command == "ALLMEMBERS":
+        all_members()
+    elif command == "ITEMS":
+        items()
+    elif command == "HELP":
+        help()
+    elif command == "MEMBERS":
+        members(args[1])
+    elif command == "REMOVEALL":
+        remove_all(args[1])
+    elif command == "KEYEXISTS":
+        key_exists(args[1])
+    elif command == "ADD":
+        add(args[1], args[2])
+    elif command == "REMOVE":
+        remove(args[1], args[2])
+    elif command == "MEMBEREXISTS":
+        member_exists(args[1], args[2])
 
 def main():
     print("Welcome to a CLI interface to interact with a multi-value dictionary.")
     print("Please type 'HELP' to receive commands to help interact with the dictionary.")
     
     while True:
-        user_input = input("Enter a command, or 'EXIT' to quit: ")
-        if user_input.upper() == "EXIT":
+        user_input = input("Enter a command or 'EXIT' to quit: ")
+        if user_input.upper() == "EXIT" or user_input.upper() == "QUIT" or user_input.upper() == "Q":
             print("Thanks for stopping by. Till next time!")
             break
         
@@ -90,11 +140,9 @@ def main():
             continue
         
         command = args[0].upper()
-        
-        if command in commands:
+        arg_count = len(args)
+        if verify_command(command, arg_count):
             process_command(command, args)
-        else:
-            print("Invalid command. Please enter a valid command")
     return
 
 if __name__ == "__main__":

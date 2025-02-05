@@ -1,3 +1,6 @@
+dictionary = {}
+commands = ["KEYS", "MEMBERS", "ADD", "REMOVE", "REMOVEALL", "CLEAR", "KEYEXISTS", "MEMBEREXISTS", "ALLMEMBERS", "ITEMS", "HELP"]
+
 ### KEYS
 # Returns all the keys in the dictionary.
 # Order is not guaranteed.
@@ -63,9 +66,36 @@ def all_members();
 def items():
     return
 
+### HELP
+# Give all commands and format, short description
+def help():
+    print(commands)
+
+def process_command(command, args):
+    return
 
 def main():
-    dictionary = {}
-
-    # write out loop for application in order to receive argument inputs
+    print("Welcome to a CLI interface to interact with a multi-value dictionary.")
+    print("Please type 'HELP' to receive commands to help interact with the dictionary.")
+    
+    while True:
+        user_input = input("Enter a command, or 'EXIT' to quit: ")
+        if user_input.upper() == "EXIT":
+            print("Thanks for stopping by. Till next time!")
+            break
+        
+        args = user_input.split()
+        if not args:
+            print()
+            continue
+        
+        command = args[0].upper()
+        
+        if command in commands:
+            process_command(command, args)
+        else:
+            print("Invalid command. Please enter a valid command")
     return
+
+if __name__ == "__main__":
+    main()

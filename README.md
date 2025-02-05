@@ -2,7 +2,7 @@
 
 ## Setup
 
-TBD
+python3 multi_value_dictionary.py
 
 ### KEYS
 Returns all the keys in the dictionary.  Order is not guaranteed.

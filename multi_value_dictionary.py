@@ -110,7 +110,7 @@ def items():
 ### HELP
 # Give all commands
 def help():
-    print("Commands available: {commands}")
+    print(f"Commands available: {commands}")
 
 def invalid_arguments(command):
     print(f"Not valid # of arguments for {command}")
